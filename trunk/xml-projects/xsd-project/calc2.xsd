@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    elementFormDefault="qualified">
+
+    <!-- 
+    <Author>
+        <Name>Guillermo Antonio</Name>  
+        <LastName>Toro Bayona</LastName>
+        <ID_Student>8567391</ID_Student        
+    </Author>
+    <Course_Unit>
+        <Course>COMP60411</Course>
+    </Course_Unit>
+    -->
+
+    <!-- 
+        My XML Schema for Calc   
+        This file represents the structure that I chose to represent calc1.dtd constraints.
+    -->
+
+
+    <!-- Import of the schema Xhtml to refers to its elements. (e.g Italic and Bold) -->
+    <xs:import namespace="http://www.w3.org/1999/xhtml"
+        schemaLocation="http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"/>
+
+    <!-- 
+        ELEMENT DECLARATION
+    -->
+
+    <!-- 
+        Element root in the expression.
+        Contains a group of expression group to represent the operations and the operands.
+        Comments are child of expression. They can take place inside 'expression' elements at 
+        the beginning and at the end.        
+    -->
+    <xs:element name="expression">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:group ref="expressionGroup"/>
+                <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        END OF ELEMENT DECLARATION
+    -->
+
+    <!-- 
+        GROUP DECLARATION
+    -->
+
+    <!-- 
+        Represent different operations such as: times, plus, minus and div.
+        Contain the operands such asc int and decimal.
+        Choice to represent the previous structure in calc1.dtd
+    -->
+    <xs:group name="expressionGroup">
+        <xs:choice>
+            <!-- Element 'int' with type 'intType' -->
+            <xs:element name="int">
+                <xs:complexType>
+                    <xs:attribute name="value" type="intType" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <!-- Element 'dec' with type 'decType' -->
+            <xs:element name="dec">
+                <xs:complexType>
+                    <xs:attribute name="value" type="decimalType" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <!-- Element 'plus' with type 'plusType' -->
+            <xs:element name="plus" type="plusType"/>
+            <!-- Element 'minus' with type 'minusType' -->
+            <xs:element name="minus" type="minusType"/>
+            <!-- Element 'times' with type 'timesType' -->
+            <xs:element name="times" type="timesType"/>
+            <!-- Element 'div' with type 'divType' -->
+            <xs:element name="div" type="divType"/>
+        </xs:choice>
+    </xs:group>
+
+    <!-- 
+        END OF GROUP DECLARATION
+    -->
+
+    <!-- 
+        COMPLEX TYPE DECLARATIONS
+    -->
+
+    <!-- 
+        'plusType' created to represent the 'plus' element in two ways.
+        Firs: 'plus' as an operation between 2 or more operands.
+        Second: 'plus' as a positive sign property for operands. 
+    -->
+    <xs:complexType name="plusType">
+        <xs:sequence>
+            <xs:group ref="expressionGroup"/>
+            <xs:group ref="expressionGroup" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- 
+        'timesType' created to represent the 'times' operation.
+        It requires two or more operands.
+    -->
+    <xs:complexType name="timesType">
+        <xs:sequence>
+            <xs:group ref="expressionGroup"/>
+            <xs:group ref="expressionGroup" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- 
+        'minusType' created to represent 'minus' element in two ways.
+        Firs: 'minus' as an operation between 2 operands.
+        Second: 'minus' as a negative sign property for operands.
+    -->
+    <xs:complexType name="minusType">
+        <xs:sequence>
+            <xs:group ref="expressionGroup"/>
+            <xs:group ref="expressionGroup" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- 
+        'divType' created to represent 'div' for division operator.
+        It requires two operands.        
+    -->
+    <xs:complexType name="divType">
+        <xs:sequence>
+            <xs:group ref="expressionGroup"/>
+            <xs:group ref="expressionGroup"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 
+        'commentType' created to represent a commment with element of XHTML.
+        Property 'mixed' with true value allow elements with this type to have
+        mixed content with this structure.
+    -->
+    <xs:complexType name="commentType" mixed="true">
+        <xs:all>
+            <!-- Creating a reference to Italic element in Xhtml XSD -->
+            <xs:element ref="xhtml:i" minOccurs="0"/>
+            <!-- Creating a reference to Bold element in Xhtml XSD -->
+            <xs:element ref="xhtml:b" minOccurs="0"/>
+        </xs:all>
+    </xs:complexType>
+
+    <!-- 
+        END OF COMPLEX TYPE DECLARATIONS
+    -->
+
+    <!-- 
+        SIMPLE TYPE DECLARATIONS
+    -->
+
+    <!-- 
+        'intType' created to represent restriction to any element of int type. 
+        'minInclusive' and 'maxInclusive' value as -1000 and 1000.
+    -->
+    <xs:simpleType name="intType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="-1000"/>
+            <xs:maxInclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- 
+        'decType' created to represent restriction to any element of decimal type. 
+        'minInclusive' and 'maxInclusive' value as -1000.00 and 1000.00
+        'restricted to 2 fraction Digits.
+    -->
+    <xs:simpleType name="decimalType">
+        <xs:restriction base="xs:decimal">
+            <!-- I decided to add a contraint related with fractions digits to 2. -->
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="-1000.00"/>
+            <xs:maxInclusive value="1000.00"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 
+        END OF SIMPLE TYPE DECLARATIONS
+    -->
+
+</xs:schema>

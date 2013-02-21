@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a simple format for excoding arithmetic 
+     expressions on integers. The operations in question
+     are +, -, and *. The output is always an integer. 
+     
+     This DTD was written by Bijan Parsia in 2010 and is put into
+     the public domain. 
+     
+     This is also used in the SAXCalc assignment. -->
+     
+<!-- Notice the level of commenting! -->
+
+<!-- I used parameter entities in order to simplify
+     the DTD, as well as making it both more readable
+     and more modular. If I want to add a decimal type
+     or an additional operation (such as division), I 
+     need only touch this declaration. -->
+<!ENTITY % expr "(plus | times | minus | int )">
+
+<!-- This is my intended root element. -->
+<!ELEMENT expression %expr;>
+
+<!-- plus and times are n-ary, where n is greater
+     than 2. Note that it's very important that the 
+     repetition operator is *inside* the parenthesis! (Why?)-->
+<!ELEMENT plus (%expr;, (%expr;)+)>
+<!ELEMENT times (%expr;, (%expr;)+)>
+
+<!-- Note that minus is a *binary* operation -->
+<!ELEMENT minus (%expr;, %expr;)>
+
+<!-- Ints are empty elements. I use an attribute
+     for the value. There's no special reason
+     for this other than I can put an *inadequeate*
+     type constraint on it. It's not even shorter, viz.:
+        <int>576</int>
+        <int value="572"/>-->
+<!ELEMENT int EMPTY>
+<!ATTLIST int value NMTOKEN #REQUIRED>

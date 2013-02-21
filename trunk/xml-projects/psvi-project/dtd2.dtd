@@ -1,0 +1,26 @@
+<!-- 
+    <Author>
+        <Name>Guillermo Antonio</Name>  
+        <LastName>Toro Bayona</LastName>
+        <ID_Student>8567391</ID_Student        
+    </Author>
+    <Course_Unit>
+        <Course>COMP60411</Course>
+    </Course_Unit>
+-->
+
+<!-- 
+    DTD2.xsd: 
+    Second approach to declare elements 'a' and elements 'b' and attribue 'c' with the given restrictions.
+    This approach declare different attribute properties such as "LiteralValues" to change the PSVI for 
+    the attributes and the elements with this attribute.   
+-->
+
+<!-- Declaration of 'a' element with entity call. -->
+<!ELEMENT a (b)+ >
+
+<!-- Element 'b' declaration as EMPTY. -->
+<!ELEMENT b EMPTY >
+
+<!-- Declaration two of 'c' attribute for 'b' element. Declare CDATA type and has fixed value. -->
+<!ATTLIST b c CDATA "LiteralValueToChangeThePSVI" >

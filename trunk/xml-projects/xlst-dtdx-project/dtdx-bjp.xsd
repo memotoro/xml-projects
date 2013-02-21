@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
+   <xs:element name="dltheory">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:sequence>
+               <xs:element ref="author"/>
+               <xs:element ref="last-revised-on"/>
+               <xs:choice>
+
+                  <xs:element minOccurs="0" maxOccurs="unbounded" ref="Axiom"/>
+
+
+                  <xs:element minOccurs="0" maxOccurs="unbounded" ref="Annotation"/>
+
+               </xs:choice>
+            </xs:sequence>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="author">
+      <xs:complexType mixed="true"/>
+   </xs:element>
+   <xs:element name="last-revised-on">
+      <xs:complexType mixed="true"/>
+   </xs:element>
+   <xs:element name="Annotation">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:choice>
+               <xs:element ref="comment"/>
+               <xs:element ref="web-source"/>
+            </xs:choice>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="comment">
+      <xs:complexType mixed="true"/>
+   </xs:element>
+   <xs:element name="web-source">
+      <xs:complexType mixed="true"/>
+   </xs:element>
+   <xs:element name="Axiom">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:choice>
+               <xs:element ref="equivalent"/>
+               <xs:element ref="subsumes"/>
+               <xs:element ref="instance-of"/>
+               <xs:element ref="related-to"/>
+            </xs:choice>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="ClassExpression">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:choice>
+               <xs:element ref="atomic"/>
+               <xs:element ref="conjunction"/>
+               <xs:element ref="exists"/>
+            </xs:choice>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="equivalent">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:sequence>
+               <xs:element ref="ClassExpression"/>
+
+               <xs:element minOccurs="0" maxOccurs="unbounded" ref="ClassExpression"/>
+
+            </xs:sequence>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="subsumes">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:sequence>
+               <xs:element ref="ClassExpression"/>
+               <xs:element ref="ClassExpression"/>
+            </xs:sequence>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="instance-of">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:sequence>
+               <xs:element ref="constant"/>
+               <xs:element ref="ClassExpression"/>
+            </xs:sequence>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="related-to">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:sequence>
+               <xs:element ref="constant"/>
+               <xs:element ref="constant"/>
+            </xs:sequence>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="conjunction">
+      <xs:complexType>
+         <xs:sequence>
+
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="ClassExpression"/>
+
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="exists">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ClassExpression"/>
+         </xs:sequence>
+         <xs:attribute name="prop" type="xs:string" use="required"/>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="atomic">
+      <xs:complexType>
+         <xs:attribute name="name" type="xs:string" use="required"/>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="constant">
+      <xs:complexType>
+         <xs:attribute name="name" type="xs:string" use="required"/>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

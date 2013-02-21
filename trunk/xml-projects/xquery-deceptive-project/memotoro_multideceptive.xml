@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Multiple deceptions, one of which has multiple aspects. -->
+
+<!-- Multideceptive -->
+ 
+<a:name xmlns:a="http://www.bear.org/">
+    <a:firstname>
+        <a:nickname 
+            xmlns:a="http://www.lamb.org/">Uncle Awesome</a:nickname>
+        <a:nickname
+            xmlns:a="http://www.tree.org/">Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname
+        xmlns:b="http://donot.org/">
+        <b:alias xmlns:b="http://do.org/">Dirkliness</b:alias>
+    </b:lastname>
+</a:name>
+
+<!-- Super-confusing -->
+<!--
+<root>
+    <a:firstname xmlns:a="http://www.bear.org/">
+        <a:nickname>Uncle Awesome</a:nickname>
+        <a:nickname>Dirk</a:nickname>
+        <b:lastname xmlns:b="http://www.bear.org/">
+            <b:alias>Dirkliness</b:alias>
+        </b:lastname>
+    </a:firstname>
+</root>
+-->
+
+<!-- Confusing -->
+<!--
+<root>
+    <a:firstname xmlns:a="http://www.bear.org/">
+        <a:nickname>Uncle Awesome</a:nickname>
+        <a:nickname>Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname
+        xmlns:b="http://www.bear.org/">
+        <b:alias>Dirkliness</b:alias>
+    </b:lastname>
+</root>
+-->
+
+<!-- Normality 2 -->
+<!--
+<root xmlns:a="http://www.bear1.org/" xmlns:b="http://www.bear2.org/"
+    xmlns:c="http://www.bear3.org/">
+    <a:firstname>
+        <a:nickname>Uncle Awesome</a:nickname>
+        <a:nickname>Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname>
+        <b:alias>Dirkliness</b:alias>
+    </b:lastname>
+    <c:middlename>
+        <c:text>Demo</c:text>
+    </c:middlename>
+</root>
+-->
+<!-- Normality 2 -->
+<!--
+<root xmlns:a="http://www.bear1.org/" xmlns:b="http://www.bear2.org/">
+    <a:firstname>
+        <a:nickname>Uncle Awesome</a:nickname>
+        <a:nickname>Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname>
+        <b:alias>Dirkliness</b:alias>
+    </b:lastname>
+    <c:middlename xmlns:c="http://www.bear3.org/">
+        <c:text>Demo</c:text>
+    </c:middlename>
+</root>
+-->
+
+<!-- Ok -->
+<!--
+<a:name xmlns:a="http://www.bear.org/">
+    <a:firstname>
+        <a:nickname 
+            xmlns:a="http://www.bear.org/">Uncle Awesome</a:nickname>
+        <a:nickname
+            xmlns:a="http://www.bear.org/">Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname
+            xmlns:b="http://donot.org/">
+        <b:alias xmlns:b="http://donot.org/">Dirkliness</b:alias>
+    </b:lastname>    
+</a:name>
+-->

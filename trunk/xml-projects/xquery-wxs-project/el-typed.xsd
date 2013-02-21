@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+    targetNamespace="http://www.cs.manchester.ac.uk/pgt/COMP60411/el"
+    xmlns:el="http://www.cs.manchester.ac.uk/pgt/COMP60411/el">
+
+    <!-- 
+        <Author>
+            <Name>Guillermo Antonio</Name>  
+            <LastName>Toro Bayona</LastName>
+            <ID_Student>8567391</ID_Student        
+        </Author>
+        <Course_Unit>
+            <Course>COMP60411</Course>
+        </Course_Unit>
+    -->
+    
+    <!-- 
+        Part 3: My XML Schema for Typed el.
+        This file represents the structure that I chose to represent the same constraints in el1.xsd
+        Contains new XSD elements such as substitution groups and types. 
+    -->
+
+    <!-- 
+        Declaration of type Axiom. 
+        Declare the type and then other elements override via xs:extension 
+    -->
+    <xs:complexType name="Axiom"/>
+
+    <!-- 
+        AxiomSubstitutionGroup. New way to represent the previous Group.
+        This is the 'head' element. The type is Axiom to represent inheritance. 
+    -->
+    <xs:element name="AxiomSubstitutionGroup" abstract="true"/>
+
+    <!-- 
+        Declaration of type Axiom. 
+        Declare the type and then other elements override via xs:extension 
+    -->
+    <xs:complexType name="ClassExpression"/>
+
+    <!-- 
+        ClassExpressionSubstitutionGroup. New way to represent the previous Group.
+        This is the 'head' element. The type is ClassExpression to represent inheritance. 
+    -->
+    <xs:element name="ClassExpressionSubstitutionGroup" abstract="true"/>
+
+    <xs:element name="dltheory">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="el:author"/>
+                <xs:element ref="el:last-revised-on"/>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <!-- 
+                        Refers to AxiomSubstitutionGroup
+                    -->
+                    <xs:element ref="el:AxiomSubstitutionGroup"/>
+                    <xs:group ref="el:Annotation"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="author" type="xs:string"/>
+    <xs:element name="last-revised-on" type="xs:date"/>
+    <xs:group name="Annotation">
+        <xs:choice>
+            <xs:element ref="el:comment"/>
+            <xs:element ref="el:web-source"/>
+        </xs:choice>
+    </xs:group>
+
+    <xs:element name="comment" type="xs:string"/>
+    <xs:element name="web-source" type="xs:anyURI"/>
+
+    <xs:group name="Entities">
+        <xs:choice>
+            <xs:element ref="el:atomic"/>
+            <xs:element ref="el:constant"/>
+        </xs:choice>
+    </xs:group>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="equivalent" substitutionGroup="el:AxiomSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of Axiom. Override properties and structure.
+                -->
+                <xs:extension base="el:Axiom">
+                    <xs:sequence>
+                        <!-- 
+                            Referes to ClassExpressionSubstitutionGroup
+                        -->
+                        <xs:element minOccurs="2" maxOccurs="unbounded"
+                            ref="el:ClassExpressionSubstitutionGroup"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="subsumes" substitutionGroup="el:AxiomSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of Axiom. Override properties and structure.
+                -->
+                <xs:extension base="el:Axiom">
+                    <xs:sequence>
+                        <!-- 
+                            Referes to ClassExpressionSubstitutionGroup
+                        -->
+                        <xs:element minOccurs="2" maxOccurs="2"
+                            ref="el:ClassExpressionSubstitutionGroup"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="instance-of" substitutionGroup="el:AxiomSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of Axiom. Override properties and structure.
+                -->
+                <xs:extension base="el:Axiom">
+                    <xs:sequence>
+                        <xs:element ref="el:constant"/>
+                        <!-- 
+                            Referes to ClassExpressionSubstitutionGroup
+                        -->
+                        <xs:element ref="el:ClassExpressionSubstitutionGroup"/>
+                    </xs:sequence>
+
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="related-to" substitutionGroup="el:AxiomSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of Axiom. Override properties and structure.
+                -->
+                <xs:extension base="el:Axiom">
+                    <xs:sequence>
+                        <xs:element ref="el:constant"/>
+                        <xs:element ref="el:constant"/>
+                    </xs:sequence>
+                    <xs:attribute name="prop" use="required" type="xs:NMTOKEN"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="conjunction" substitutionGroup="el:ClassExpressionSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of ClassExpression. Override properties and structure.
+                -->
+                <xs:extension base="el:ClassExpression">
+                    <xs:sequence>
+                        <!-- 
+                            Referes to ClassExpressionSubstitutionGroup
+                        -->
+                        <xs:element minOccurs="0" maxOccurs="unbounded"
+                            ref="el:ClassExpressionSubstitutionGroup"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="exists" substitutionGroup="el:ClassExpressionSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of ClassExpression. Override properties and structure.
+                -->
+                <xs:extension base="el:ClassExpression">
+                    <xs:sequence>
+                        <!-- 
+                            Referes to ClassExpressionSubstitutionGroup
+                        -->
+                        <xs:element ref="el:ClassExpressionSubstitutionGroup"/>
+                    </xs:sequence>
+                    <xs:attribute name="prop" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 
+        Element with attribute 'substitutionGroup'. 
+        Is considered part of the group of the 'head element.'
+    -->
+    <xs:element name="atomic" substitutionGroup="el:ClassExpressionSubstitutionGroup">
+        <xs:complexType>
+            <xs:complexContent>
+                <!-- 
+                    Type of ClassExpression. Override properties and structure.
+                -->
+                <xs:extension base="el:ClassExpression">
+                    <xs:attribute name="name" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="constant">
+        <xs:complexType>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

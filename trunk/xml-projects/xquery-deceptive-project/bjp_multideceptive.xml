@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Multiple deceptions, one of which has multiple aspects. -->
+<a:name xmlns:a="http://www.bear.org/">
+    <a:firstname>
+        <!-- Look! We've redefined "a" -->
+        <a:nickname 
+            xmlns:a="http://www.lamb.org/">Uncle Awesome</a:nickname>
+        <a:nickname
+            xmlns:a="http://www.tree.org/">Dirk</a:nickname>
+    </a:firstname>
+    <b:lastname
+            xmlns:b="http://donot.org/">
+        <b:alias xmlns:b="http://do.org/">Dirkliness</b:alias>
+    </b:lastname>
+</a:name>

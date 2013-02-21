@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <Author>
+        <Name>Guillermo Antonio</Name>  
+        <LastName>Toro Bayona</LastName>
+        <ID_Student>8567391</ID_Student        
+    </Author>
+    <Course_Unit>
+        <Course>COMP60411</Course>
+    </Course_Unit>
+-->
+
+<!-- My Structure for dtdx -->
+
+<!-- 
+    This file represents a structure with basically 3 components; comments, elements and attribute list.
+    These elements can appear in any order with many occurrences in the document.
+    It's my approach to achieve the DTD structure's flexibility.
+-->
+
+<!-- 
+    DTDX STRUCTURE    
+-->                    
+<!ELEMENT dtdx ( (comment_decl* | element_decl* | attlist_decl*)* )>
+<!-- 
+    END OF DTDX STRUCTURE    
+-->                    
+
+<!-- 
+    COMMENTS ELEMENT   
+--> 
+
+<!-- Element 'comment_decl': The comment declaration is composed by open_tag, comment_content and close_tag. -->
+<!ELEMENT comment_decl (comment_open_tag, comment_content, comment_close_tag)>
+<!-- Element 'comment_open_tag': Empty Element -->            
+<!ELEMENT comment_open_tag EMPTY>
+<!-- Attributes for 'comment_open_tag': This atribute represents an opening comment tag  -->
+<!ATTLIST comment_open_tag value CDATA #FIXED "&lt;--">
+<!-- Element 'comment_content': Empty Element -->
+<!ELEMENT comment_content EMPTY>
+<!-- Attributes for 'comment_content': This attribute represents the comment with any combination of text and tags, finally the value -->
+<!ATTLIST comment_content type CDATA #FIXED "ANY" value CDATA #IMPLIED>
+<!-- Element 'comment_close_tag': Empty Element -->
+<!ELEMENT comment_close_tag EMPTY>
+<!-- Attributes for 'comment_close_tag': This attributes represents a closing comment tag  -->
+<!ATTLIST comment_close_tag value CDATA #FIXED "--&gt;">
+
+<!-- 
+    END OF COMMENTS ELEMENT    
+-->                    
+                    
+<!-- 
+    ELEMENT DECLARATION    
+-->                    
+
+<!-- Element 'element_decl': An element declaration has an element name and element content. -->
+<!ELEMENT element_decl (element_decl_open_tag, element_name, element_content, element_decl_close_tag)>
+<!-- Element 'element_decl_open_tag': Represent and open tag for element declaration  -->
+<!ELEMENT element_decl_open_tag EMPTY>
+<!-- Attributes for 'element_decl_open_tag': Fixed word 'ElEMENT' -->
+<!ATTLIST element_decl_open_tag value CDATA #FIXED "&lt;!ELEMENT">
+<!-- Element 'element_name': Empty Element -->
+<!ELEMENT element_name EMPTY>
+<!-- Attributes for 'element_name': The name has a value with ID properties. -->
+<!ATTLIST element_name value ID #REQUIRED>
+<!-- Element 'element_content': The element content could be one of the following options: Empty, Any, Mixed and Children. -->
+<!ELEMENT element_content (content_empty | content_any | content_mixed | content_children )>
+<!-- Element 'content_empty ': Empty Element -->
+<!ELEMENT content_empty EMPTY>
+<!-- Attributes for 'content_empty': Fixed value with EMPTY string -->
+<!ATTLIST content_empty value CDATA #FIXED "EMPTY">
+<!-- Element 'content_empty': Empty Element -->
+<!ELEMENT content_any EMPTY>
+<!-- Attributes for 'content_empty': Fixed value with ANY string -->
+<!ATTLIST content_any value CDATA #FIXED "ANY">
+<!-- Element 'content_mixed': This element could be composed by a parsed char content, or mixed content between parsed data and others elements. -->
+<!ELEMENT content_mixed ( parsed_char_content | ( (parsed_char_content?, element_name_ref*)* ) )>
+<!-- Attributes for 'content_mixed': The description of the content type, just PCDATA or MIXED CONTENT. -->
+<!ATTLIST content_mixed description (PCDATA_ONLY | PCDATA_ELEMENTS_MIX) #REQUIRED>
+<!-- Element 'parsed_char_content': Empty Element -->
+<!ELEMENT parsed_char_content EMPTY>
+<!-- Attributes for 'parsed_char_content': Fixed value PCDATA string .-->
+<!ATTLIST parsed_char_content value CDATA #FIXED "#PCDATA" >
+<!-- Element 'element_name_ref': Refers others ID elements declared in the document. Empty Element -->
+<!ELEMENT element_name_ref EMPTY>
+<!-- Attributes for 'element_name_ref': Attribute 'IDREFS' definition for other element names declared in the DTD. Attribute 'element_occurrences'. -->
+<!ATTLIST element_name_ref element_name_refered IDREFS #REQUIRED element_name_occurrency (ONE | ZERO_MANY | ZER0_ONE | ONE_MANY) #REQUIRED>
+<!-- Element 'content_children': This element contents a list of other elements declared in the document. -->
+<!ELEMENT content_children (element_name_ref+) >
+<!-- Attributes for 'content_children': This attribute show the option for the elements references, it's possible to have a choice or have a sequence of element refs. -->
+<!ATTLIST content_children children_selection (CHOICE | SEQUENCE) #REQUIRED>
+<!-- Element 'element_decl_close_tag': Represent and open tag for element declaration  -->
+<!ELEMENT element_decl_close_tag EMPTY>
+<!-- Attributes for 'element_decl_open_tag': Fixed '>' -->
+<!ATTLIST element_decl_close_tag value CDATA #FIXED "&gt;">
+<!-- 
+    END OF ELEMENT DECLARATION    
+-->
+
+<!-- 
+    ATTRIBUTE LIST DECLARATION    
+-->                    
+
+<!-- Element 'attlist_decl': An attribute list declaration. It has an 'element_name' which the attribute is associated, an attribute name, type of attribute and attribte default declaration. -->
+<!ELEMENT attlist_decl (attribute_decl_open_tag, attribute_element_name_ref, attribute_name, attribute_type, attribute_default, attribute_decl_close_tag)+ >
+<!-- Element 'attribute_decl_open_tag': Represent and open tag for element declaration  -->
+<!ELEMENT attribute_decl_open_tag EMPTY>
+<!-- Attributes for 'attribute_decl_open_tag': Fixed word 'ATTLIST' -->
+<!ATTLIST attribute_decl_open_tag value CDATA #FIXED "&lt;!ATTLIST">
+<!-- Element 'attribute_element_name_ref': Represent a reference to a element declared in a document. -->
+<!ELEMENT attribute_element_name_ref EMPTY>
+<!-- Attributes for 'attribute_element_name_ref': CData required. -->
+<!ATTLIST attribute_element_name_ref element_name_refered IDREFS #REQUIRED>
+<!-- Element 'attribute_name': Empty element. -->
+<!ELEMENT attribute_name EMPTY >
+<!-- Attributes for 'attribute_name': CData required. -->
+<!ATTLIST attribute_name value CDATA #REQUIRED >
+<!-- Element 'attribute_type': Element with the list of all the possible types of attributes. -->
+<!ELEMENT attribute_type (att_type_cdata | att_type_nmtoken | att_type_nmtokens | att_type_enumaration | 
+                            att_type_id | att_type_idref | att_type_idrefs | att_type_entity | 
+                            att_type_entities | att_type_notation) >
+<!-- Element 'type_cdata': Element that represents CDATA type -->                            
+<!ELEMENT att_type_cdata EMPTY >
+<!-- Attributes for 'att_type_cdata': CDATA literal. -->
+<!ATTLIST att_type_cdata value CDATA #FIXED "CDATA">
+<!-- Element 'att_type_nmtoken': Element that represents NMTOKEN type -->
+<!ELEMENT att_type_nmtoken EMPTY >
+<!-- Attributes for 'att_type_nmtoken': NMTOKEN literal. -->
+<!ATTLIST att_type_nmtoken value CDATA #FIXED "NMTOKEN">
+<!-- Element 'att_type_nmtokens': Element that represents NMTOKENS type -->
+<!ELEMENT att_type_nmtokens EMPTY >
+<!-- Attributes for 'att_type_nmtokens': NMTOKENS literal. -->
+<!ATTLIST att_type_nmtokens value CDATA #FIXED "NMTOKENS">
+<!-- Element 'att_type_enumaration': Element that represents Enumeration type. List of enumeration elements. -->
+<!ELEMENT att_type_enumaration (enumeration_element)+ >
+<!-- Element 'enumeration_element': Element that represents lists of elements for enumeration. -->
+<!ELEMENT enumeration_element EMPTY >
+<!-- Attributes for 'enumeration_element': Represent the value for the enumeration. -->
+<!ATTLIST enumeration_element value CDATA #REQUIRED>
+<!-- Element 'att_type_id': Element that represents ID type. -->
+<!ELEMENT att_type_id EMPTY >
+<!-- Attributes for 'att_type_id': ID literal. -->
+<!ATTLIST att_type_id  value CDATA #FIXED "ID">
+<!-- Element 'att_type_idref': Element that represents IDREF type. -->
+<!ELEMENT att_type_idref EMPTY > 
+<!-- Attributes for 'att_type_idref': IDREF literal. -->
+<!ATTLIST att_type_idref value CDATA #FIXED "IDREF">
+<!-- Element 'att_type_idrefs': Element that represents IDREFS type. -->
+<!ELEMENT att_type_idrefs EMPTY >
+<!-- Attributes for 'att_type_idrefs': IDREFS literal. -->
+<!ATTLIST att_type_idrefs value CDATA #FIXED "IDREFS">
+<!-- Element 'att_type_entity': Element that represents ENTITY type. -->
+<!ELEMENT att_type_entity EMPTY >
+<!-- Attributes for 'att_type_entity': ENTITY literal. -->
+<!ATTLIST att_type_entity value CDATA #FIXED "ENTITY">
+<!-- Element 'att_type_entities': Element that represents ENTITIES type. -->
+<!ELEMENT att_type_entities EMPTY >
+<!-- Attributes for 'att_type_entities': ENTITIES literal. -->
+<!ATTLIST att_type_entities value CDATA #FIXED "ENTITIES">
+<!-- Element 'att_type_notation': Element that represents NOTATION type. List of notation element -->
+<!ELEMENT att_type_notation (notation_element)+ >
+<!-- Attributes for 'att_type_notation': NOTATION literal. -->
+<!ATTLIST att_type_notation value CDATA #FIXED "NOTATION">
+<!-- Element 'notation_element': List of notation element. -->
+<!ELEMENT notation_element EMPTY >
+<!-- Attributes for 'notation_element': notation name, notation internal or external declaration and notation value. -->
+<!ATTLIST notation_element notation_element_name CDATA #REQUIRED
+                            notation_ext_int_entities (SYSTEM | PUBLIC | NDATA) #REQUIRED
+                            notation_value CDATA #REQUIRED>
+<!-- Element 'attribute_default': Represent the defaults for an attribute. -->
+<!ELEMENT attribute_default (att_default_required | att_default_fixed | att_default_implied | att_default_literal) >
+<!-- Element 'att_default_required': Represent Required. -->
+<!ELEMENT att_default_required EMPTY >
+<!-- Attributes for 'att_default_required': REQUIRED literal. -->
+<!ATTLIST att_default_required value CDATA #FIXED "#REQUIRED">
+<!-- Element 'att_default_fixed': Represent Fixed. -->
+<!ELEMENT att_default_fixed EMPTY >
+<!-- Attributes for 'att_default_fixed': FIXED literal. -->
+<!ATTLIST att_default_fixed value CDATA #FIXED "#FIXED" default_value CDATA #REQUIRED>
+<!-- Element 'att_default_implied': Represent Implied. -->
+<!ELEMENT att_default_implied EMPTY >
+<!-- Attributes for 'att_default_implied': IMPLIED literal. -->
+<!ATTLIST att_default_implied value CDATA #FIXED "#IMPLIED">
+<!-- Element 'att_default_literal': Represent Literal values. -->
+<!ELEMENT att_default_literal EMPTY >
+<!-- Attributes for 'att_default_literal': CDATA for literal values. -->
+<!ATTLIST att_default_literal value CDATA #IMPLIED>
+<!-- Element 'attribute_decl_close_tag': Represent and open tag for attlist declaration  -->
+<!ELEMENT attribute_decl_close_tag EMPTY>
+<!-- Attributes for 'attribute_decl_close_tag': Fixed '>' -->
+<!ATTLIST attribute_decl_close_tag value CDATA #FIXED "&gt;">
+
+<!-- 
+    END OF ATTRIBUTE LIST DECLARATION    
+-->                    

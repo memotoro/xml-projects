@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dtdx SYSTEM "dtdx-bjp.dtd">
+<dtdx>
+    <element name="dltheory">
+        <seq>
+            <ref to="author"/>
+            <ref to="last-revised-on"/>
+            <choice>
+                <star>
+                    <ref to="Axiom"/>
+                </star>
+                <star>
+                    <ref to="Annotation"/>
+                </star>
+            </choice>
+        </seq>
+    </element>
+
+    <element name="author">
+        <mixed/>
+    </element>
+
+    <element name="last-revised-on">
+        <mixed/>
+    </element>
+
+    <element name="Annotation">
+        <choice>
+            <ref to="comment"/>
+            <ref to="web-source"/>
+        </choice>
+    </element>
+
+    <element name="comment">
+        <mixed/>
+    </element>
+
+    <element name="web-source">
+        <mixed/>
+    </element>
+
+    <element name="Axiom">
+        <choice>
+            <ref to="equivalent"/>
+            <ref to="subsumes"/>
+            <ref to="instance-of"/>
+            <ref to="related-to"/>
+        </choice>
+    </element>
+
+
+    <element name="ClassExpression">
+        <choice>
+            <ref to="atomic"/>
+            <ref to="conjunction"/>
+            <ref to="exists"/>
+        </choice>
+    </element>
+
+    <element name="equivalent">
+        <seq>
+            <ref to="ClassExpression"/>
+            <star>
+                <ref to="ClassExpression"/>
+            </star>
+        </seq>
+    </element>
+
+    <element name="subsumes">
+        <seq>
+            <ref to="ClassExpression"/>
+            <ref to="ClassExpression"/>
+        </seq>
+    </element>
+
+    <element name="instance-of">
+        <seq>
+            <ref to="constant"/>
+            <ref to="ClassExpression"/>
+        </seq>
+    </element>
+
+    <element name="related-to">
+        <seq>
+            <ref to="constant"/>
+            <ref to="constant"/>
+        </seq>
+    </element>
+
+    <element name="conjunction">
+        <star>
+            <ref to="ClassExpression"/>
+        </star>
+    </element>
+
+    <element name="exists">
+        <ref to="ClassExpression"/>
+    </element>
+
+    <attlist on="exists">
+        <attdef name="prop">
+            <string/>
+            <required/>
+        </attdef>
+    </attlist>
+
+    <element name="atomic">
+        <empty/>
+    </element>
+    <attlist on="atomic">
+        <attdef name="name">
+            <string/>
+            <required/>
+        </attdef>
+    </attlist>
+
+    <element name="constant">
+        <empty/>
+    </element>
+    <attlist on="constant">
+        <attdef name="name">
+            <string/>
+            <required/>
+        </attdef>
+    </attlist>
+</dtdx>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a simple format for excoding arithmetic 
+     expressions on integers. The operations in question
+     are +, -, and *. The output is always an integer. 
+     
+     This DTD was written by Bijan Parsia in 2010 and
+     is copyrighted by him. You may not distribute this
+     file.
+     
+     This is also used in the SAXCalc assignment. -->
+     
+<!-- Notice the level of commenting! -->
+
+<!-- This is my intended root element. -->
+<!ELEMENT expression (plus | times | minus | int )>
+
+<!-- plus and times are n-ary, where n is greater or equal to
+     than 2. Note that it's very important that the 
+     repetition operator is *inside* the parenthesis! (Why?)-->
+<!ELEMENT plus ((plus | times | minus | int ), (plus | times | minus | int )+)>
+<!ELEMENT times ((plus | times | minus | int ), (plus | times | minus | int )+)>
+
+<!-- Note that minus is a *binary* operation -->
+<!ELEMENT minus ((plus | times | minus | int ), (plus | times | minus | int ))>
+
+<!-- Ints are empty elements. I use an attribute
+     for the value. There's no special reason
+     for this other than I can put an *inadequate*
+     type constraint on it. It's not even shorter, viz.:
+        <int>576</int>
+        <int value="572"/>-->
+<!ELEMENT int EMPTY>
+<!ATTLIST int value NMTOKEN #REQUIRED>

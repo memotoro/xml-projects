@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Not Valid -->
+<expression>
+    <times>
+	<int value="1">
+	    <new_tag/>
+	</int>
+        <int value="1"/>
+    </times>    
+</expression>
