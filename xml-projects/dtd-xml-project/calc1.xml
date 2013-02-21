@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dtdx SYSTEM "dtdx.dtd">
+<!-- 
+     <Author>
+          <Name>Guillermo Antonio</Name>  
+          <LastName>Toro Bayona</LastName>
+          <ID_Student>8567391</ID_Student        
+     </Author>
+     <Course_Unit>
+          <Course>COMP60411</Course>
+     </Course_Unit>
+-->
+
+<!-- My approach of calc1.dtd based on my structure for dtdx. -->
+<dtdx>
+     
+     <!-- Comment Element Declaration. -->     
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="
+               This is a simple format for excoding arithmetic 
+               expressions on integers. The operations in question
+               are +, -, and *. The output is always an integer. 
+               
+               This DTD was written by Bijan Parsia in 2010 and
+               is copyrighted by him. You may not distribute this
+               file.
+               
+               This is also used in the SAXCalc assignment."/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>
+     
+     <!-- Comment Element Declaration. -->     
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="Notice the level of commenting!"/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>
+     
+     <!-- Comment Element Declaration. -->
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="This is my intended root element."/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>     
+     
+     <!-- Element Declaration. -->
+     <!-- This Element represents the expression element. -->        
+     <element_decl>
+          <element_decl_open_tag value="&lt;!ELEMENT"/>
+          <element_name value="expression"/>
+          <!-- It's a choice of elements with 1 occurence. -->
+          <element_content>          
+               <content_children children_selection="CHOICE">
+                    <element_name_ref element_name_refered="plus" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="times" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="minus" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="int" element_name_occurrency="ONE"/>
+               </content_children>
+          </element_content>
+          <element_decl_close_tag value=">"/>
+     </element_decl>
+     
+     <!-- Comment Element Declaration. -->
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="
+               plus and times are n-ary, where n is greater or equal to
+               than 2. Note that it's very important that the 
+               repetition operator is *inside* the parenthesis! (Why?)"/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>
+     
+     <!-- Element Declaration. -->
+     <!-- This Element represents the element plus. -->   
+     <element_decl>
+          <element_decl_open_tag value="&lt;!ELEMENT"/>
+          <element_name value="plus"/>
+          <!-- It's a sequence of elements 'expression' with different occurrences. -->
+          <element_content>               
+               <content_children children_selection="SEQUENCE">
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE_MANY"/>
+               </content_children>
+          </element_content>
+          <element_decl_close_tag value=">"/>
+     </element_decl>
+     
+     <!-- Element Declaration. -->
+     <!-- This Element represents the element times. -->
+     <element_decl>
+          <element_decl_open_tag value="&lt;!ELEMENT"/>
+          <element_name value="times"/>
+          <!-- It's a sequence of elements 'expression' with different occurrences. -->
+          <element_content>
+               <content_children children_selection="SEQUENCE">
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE_MANY"/>
+               </content_children>
+          </element_content>
+          <element_decl_close_tag value=">"/>
+     </element_decl>
+     
+     <!-- Comment Element Declaration. -->
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="Note that minus is a *binary* operation"/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>
+     
+     <!-- Element Declaration. -->
+     <!-- This Element represents the expression minus. -->
+     <element_decl>
+          <element_decl_open_tag value="&lt;!ELEMENT"/>
+          <element_name value="minus"/>
+          <!-- It's a pair of elements 'expression' with one occurrence each. -->
+          <element_content>
+               <content_children children_selection="SEQUENCE">
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE"/>
+                    <element_name_ref element_name_refered="expression" element_name_occurrency="ONE"/>
+               </content_children>
+          </element_content>
+          <element_decl_close_tag value=">"/>
+     </element_decl>
+     
+     <!-- Comment Element Declaration. -->
+     <comment_decl>
+          <comment_open_tag value="&lt;--"/>
+          <comment_content type="ANY" value="
+               Ints are empty elements. I use an attribute
+               for the value. There's no special reason
+               for this other than I can put an *inadequate*
+               type constraint on it. It's not even shorter, viz.:
+               &lt;int&gt;576&lt;/int&gt;
+               &lt;int value='572'/&gt;"/>
+          <comment_close_tag value="-->"/>
+     </comment_decl>
+     
+     <!-- Element Declaration. -->
+     <!-- This Element represents an int. -->     
+     <element_decl>
+          <element_decl_open_tag value="&lt;!ELEMENT"/>
+          <element_name value="int"/>
+          <!-- It's an empty element. -->
+          <element_content>
+               <content_empty value="EMPTY"/>
+          </element_content>
+          <element_decl_close_tag value=">"/>
+     </element_decl>
+     
+     <!-- Attribute List Declaration. -->
+     <!-- This Element represents attribute value for int. -->  
+     <attlist_decl>
+          <attribute_decl_open_tag value="&lt;!ATTLIST"/>
+          <attribute_element_name_ref element_name_refered="int"/>
+          <attribute_name value="value"/>
+          <!-- Features of the attribute value. -->
+          <attribute_type>
+               <att_type_nmtoken value="NMTOKEN"/>
+          </attribute_type>          
+          <attribute_default>
+               <att_default_required value="#REQUIRED"/>
+          </attribute_default>
+          <attribute_decl_close_tag value=">"/>
+     </attlist_decl>     
+     
+</dtdx>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Not Valid -->
+<expression>
+    <minus>
+	text invalid
+	<int value="1"/>
+        <int value="1"/>
+    </minus>    
+</expression>

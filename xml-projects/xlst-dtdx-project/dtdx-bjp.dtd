@@ -1,0 +1,84 @@
+<!-- The root element.
+	Productions taken from http://www.w3.org/TR/REC-xml/#NT-markupdecl
+	
+    markupdecl ::= elementdecl | AttlistDecl | Comment  -->
+<!ELEMENT dtdx  (element | attlist | comment)*> 
+
+<!-- Entities must be declared before use. See [47] and [48] -->
+<!ENTITY % repat "(star|plus|opt)" >
+<!ENTITY % nonrepat "(ref | choice | seq)">
+<!ENTITY % cp "%nonrepat; | %repat;">
+<!ENTITY % children "%cp;" >
+
+<!-- [45]   	elementdecl	   ::=   	'<!ELEMENT' S Name S contentspec S? '>'	[VC: Unique Element Type Declaration]-->
+<!ELEMENT element (empty | any | mixed | %children;)>
+<!ATTLIST element name ID #REQUIRED>
+
+<!-- Need both e-decl and e-ref. No need for attribute refs. -->
+<!ELEMENT ref EMPTY>
+<!ATTLIST ref to IDREF #REQUIRED>
+
+<!-- [46]   	contentspec	   ::=   	'EMPTY' | 'ANY' | Mixed | children -->
+<!ELEMENT empty EMPTY>
+<!ELEMENT any EMPTY>
+
+<!-- [51]   	Mixed	   ::=   	'(' S? '#PCDATA' (S? '|' S? Name)* S? ')*'
+                                  | '(' S? '#PCDATA' S? ')' -->
+
+<!--I leave the #PCDATA implied, as well as the alternation. It's just a list of refs
+    It being empty makes it equivalent to the second alternative.-->
+<!ELEMENT mixed (ref)*>
+
+<!-- [47]   	children	   ::=   	(choice | seq) ('?' | '*' | '+')?
+     [48]   	cp	   ::=   	(Name | choice | seq) ('?' | '*' | '+')?
+     [49]   	choice	   ::=   	'(' S? cp ( S? '|' S? cp )+ S? ')'	[VC: Proper Group/PE Nesting]
+     [50]   	seq	   ::=   	'(' S? cp ( S? ',' S? cp )* S? ') -->
+
+<!ELEMENT choice ((%cp;), (%cp;)+)>
+<!ELEMENT seq ((%cp;), (%cp;)+)>
+<!ELEMENT opt %nonrepat;>
+<!ELEMENT star %nonrepat;>
+<!ELEMENT plus %nonrepat;>
+
+<!-- [52]   	AttlistDecl	   ::=   	'<!ATTLIST' S Name AttDef* S? '>' -->
+<!ELEMENT attlist (attdef)*>
+<!ATTLIST attlist on IDREF #REQUIRED>
+
+<!-- [53]   	AttDef	   ::=   	 S Name S AttType S DefaultDecl -->
+<!-- <!ENTITY % atype "(string | tokenized | enumeration | notation)" >-->
+<!ENTITY % atype "(string| tokenized | enumeration | notation )">
+<!ENTITY % default "(required | implied | default)" >
+<!ELEMENT attdef (%atype;, %default;)>
+<!ATTLIST attdef name NMTOKEN #REQUIRED>
+
+<!-- [54]   	AttType	   ::=   	 StringType | TokenizedType | EnumeratedType
+[55]   	StringType	   ::=   	'CDATA'
+[56]   	TokenizedType	   ::=   	'ID'	[VC: ID]
+| 'IDREF'	[VC: IDREF]
+| 'IDREFS'	[VC: IDREF]
+| 'ENTITY'	[VC: Entity Name]
+| 'ENTITIES'	[VC: Entity Name]
+| 'NMTOKEN'	[VC: Name Token]
+| 'NMTOKENS'	[VC: Name Token]
+[58]   	NotationType	   ::=   	'NOTATION' S '(' S? Name (S? '|' S? Name)* S? ')'
+[59]   	Enumeration	   ::=   	'(' S? Nmtoken (S? '|' S? Nmtoken)* S? ')'-->
+
+<!ELEMENT string EMPTY> <!-- 'string' is more meaningful than 'CDATA' -->
+<!ELEMENT tokenized EMPTY>
+<!ATTLIST tokenized type (ID | IDREF | IDREFS | ENTITY | ENTITIES | NMTOKEN | NMTOKENS) #REQUIRED>
+<!ELEMENT enumeration (nmtoken+)>
+<!ELEMENT notation (nmtoken+)><!-- This is looser than required. NMTOKEN is more liberal than Name in the start char -->
+<!ELEMENT nmtoken EMPTY>
+<!ATTLIST nmtoken value NMTOKEN #REQUIRED>
+
+<!-- [60]   	DefaultDecl	   ::=   	'#REQUIRED' | '#IMPLIED'
+    | (('#FIXED' S)? AttValue) -->
+ 
+<!ELEMENT required EMPTY>
+<!ELEMENT implied EMPTY>
+<!ELEMENT default EMPTY>
+<!ATTLIST default value CDATA #IMPLIED
+                  fixed (true | false) 'false'>
+
+
+<!ELEMENT comment (#PCDATA)>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Not Valid -->
+<expression>
+    <plus>
+        <times>
+            <int value="1"/>
+            <times>
+                <int value="1"/>
+                <int value="1"/>
+				<!-- Value is double not integer -->
+                <int value="0.5"/>
+            </times>
+        </times>
+        <minus>
+            <plus>
+                <int value="1"/>
+                <int value="1"/>
+            </plus>
+            <int value="1"/>
+        </minus>
+    </plus>
+    
+</expression>

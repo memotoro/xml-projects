@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dtdx SYSTEM "dtdx-bjp.dtd">
+<dtdx>
+    <element name="expression">
+        <choice>
+            <ref to="plus"/>
+            <ref to="minus"/>
+            <ref to="times"/>
+            <ref to="int"/>
+        </choice>
+    </element>
+    
+    <element name="plus">
+        <seq>
+            <ref to="expression"/>
+            <star>
+                <ref to="expression"/>
+            </star>            
+        </seq>
+    </element>
+    
+    <element name="times">
+        <seq>
+            <ref to="expression"/>
+            <star>
+                <ref to="expression"/>
+            </star>            
+        </seq>
+    </element>
+    
+    <element name="minus">
+        <seq>
+            <ref to="expression"/>
+            <ref to="expression"/>                       
+        </seq>
+    </element>
+
+    <element name="int">
+        <empty/>
+    </element>
+    
+    <attlist on="int">
+        <attdef name="value">
+            <string/>
+            <required/>
+        </attdef>
+    </attlist>
+</dtdx>

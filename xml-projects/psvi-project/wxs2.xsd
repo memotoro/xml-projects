@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.cs.manchester.ac.uk/pgt/COMP60411/m4"
+    elementFormDefault="unqualified"
+    xmlns:man="http://www.cs.manchester.ac.uk/pgt/COMP60411/m4">   
+      
+    <!-- 
+        <Author>
+            <Name>Guillermo Antonio</Name>  
+            <LastName>Toro Bayona</LastName>
+            <ID_Student>8567391</ID_Student        
+        </Author>
+        <Course_Unit>
+            <Course>COMP60411</Course>
+        </Course_Unit>
+    -->
+    
+    <!-- 
+        WXS2.xsd: 
+        Second approach to declare elements 'a' and elements 'b' with the given restrictions.
+        This approach is declare 'types' in different levels in order to change the PSVI.
+        It is possible to retrieve element from documents validated with respect to this XSD 
+        based on all the different 'types' declared here. 
+    -->      
+      
+    <!-- Declaration of element 'a'. It has a type with value 'aType'. -->
+    <xs:element name="a" type="man:aType"/>
+    
+    <!-- 
+        Declaration of 'aType' with reference to 'b' element.  
+    -->
+    <xs:complexType name="aType">
+        <!-- 
+            Extends from general type. 
+            'aType' is a specialization of 'generalType'.
+            It is possible to retrieve elements 'a' with 'aType' and 'generalType' queries. 
+        -->
+        <xs:complexContent>
+            <xs:extension base="man:generalType">
+            <!-- This element has a sequence of 'b' elements. -->
+            <xs:sequence>
+                <xs:element ref="man:b" maxOccurs="unbounded"/>
+            </xs:sequence>                
+            </xs:extension>
+        </xs:complexContent>            
+    </xs:complexType>
+    
+    <!-- Declaration of 'bGroup' to reference 'b' elements. -->
+    <xs:group name="bGroup">
+        <xs:sequence>
+            <!-- 
+                Reference to 'b' elements. Add information about the minOccurs 
+                to add information in the PSVI.
+            -->
+            <xs:element ref="man:b" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:group>
+    
+    <!-- 
+        Declaration of 'b' element with 'bType'. 
+        Element EMPTY with no attributes. 
+    -->
+    <xs:element name="b" type="man:bType"> </xs:element>
+    
+    <!-- 
+        Declaration of 'bType'.        
+        It is possible to retrieve elements 'b' with 'bType' and 'generalType' queries.
+    -->
+    <xs:complexType name="bType">
+        <!-- 
+            Extends from general type. 
+            'bType' is a specialization of 'generalType'. 
+            It is possible to retrieve elements 'b' with 'bType' and 'generalType' queries.
+        -->
+        <xs:complexContent>
+            <xs:extension base="man:generalType"></xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- 
+        Declaration of 'generalType'. 
+        All the different types extends from this type. 
+        It is possible to retrieve all types in the documents with this type. 
+    -->
+    <xs:complexType name="generalType"> </xs:complexType>
+
+</xs:schema>

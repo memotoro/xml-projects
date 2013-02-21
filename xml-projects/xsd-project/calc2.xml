@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<expression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.cs.manchester.ac.uk/COMP60411/WEEK2/M2 calc2.xsd">
+    <comment> Hello it is a comment with <i xmlns="http://www.w3.org/1999/xhtml">HTML elements</i>
+        in the text. <b xmlns="http://www.w3.org/1999/xhtml">It's really important</b>. See you. </comment>
+    <plus>
+        <int value="1"/>
+        <int value="2"/>
+        <int value="3"/>
+        <plus>
+            <int value="2"/>
+            <times>
+                <times>
+                    <minus>
+                        <int value="3"/>
+                        <plus>
+                            <int value="3"/>
+                            <int value="3"/>
+                            <plus>
+                                <int value="9"/>
+                            </plus>
+                        </plus>
+                    </minus>
+                    <dec value="9"/>
+                </times>
+                <minus>
+                    <plus>
+                        <int value="4"/>
+                        <int value="4"/>
+                    </plus>
+                    <times>
+                        <int value="4"/>
+                        <int value="4"/>
+                        <minus>
+                            <int value="9"/>
+                        </minus>
+                    </times>
+                </minus>
+            </times>
+        </plus>
+    </plus>
+    <comment> Hello it is a comment with <i xmlns="http://www.w3.org/1999/xhtml">HTML elements</i>
+        in the text. <b xmlns="http://www.w3.org/1999/xhtml">It's really important</b>. See you.
+    </comment>
+</expression>

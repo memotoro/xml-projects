@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dltheory xmlns="http://www.cs.manchester.ac.uk/pgt/COMP60411/el" xmlns:el="http://www.cs.manchester.ac.uk/pgt/COMP60411/el"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.cs.manchester.ac.uk/pgt/COMP60411/el
+    el-typed.xsd">
+    <author>Bijan Parsia</author>
+    <last-revised-on>2010-02-12</last-revised-on>
+    
+    <comment>Sally is a good friend.</comment>
+    <instance-of>
+        <constant name="sally"/>
+        <atomic name="Person"/>
+    </instance-of>
+    
+    <comment>While I trust the following axiom is obvious, 
+    you can also find it in Wikipedia.</comment>
+    <web-source>http://en.wikipedia.org/wiki/Human</web-source>
+    <subsumes>
+        <atomic name="Human"/>
+        <atomic name="LivingThing"/>
+    </subsumes>
+    
+    <subsumes>
+        <conjunction>
+            <atomic name="Human1"/>
+            <exists prop="hasParent">
+                <atomic name="Person1"/>
+            </exists>
+        </conjunction>
+        <atomic name="Person2"/>
+    </subsumes>
+    
+    <comment>This is true in common discussion, at least.</comment>
+    <equivalent>
+        <atomic name="Human2"/>
+        <atomic name="HomoSapiens"/>
+        <conjunction>
+            <atomic name="Human3"/>
+            <exists prop="hasParent">
+                <atomic name="Person3"/>                
+            </exists>
+            <conjunction>
+                <atomic name="Human4"/>
+                <exists prop="hasParent">
+                    <atomic name="Person4"/>
+                </exists>
+                <conjunction>
+                    <atomic name="Human5"/>
+                    <exists prop="hasParent">
+                        <atomic name="Person5"/>
+                    </exists>
+                    <conjunction>
+                        <atomic name="Human6"/>
+                        <exists prop="hasParent">
+                            <atomic name="Person6"/>
+                        </exists>
+                        <conjunction>
+                            <atomic name="Human7"/>
+                            <exists prop="hasParent">
+                                <atomic name="Person7"/>
+                            </exists>
+                            <conjunction>
+                                <atomic name="Human8"/>
+                                <exists prop="hasParent">
+                                    <atomic name="Person8"/>
+                                </exists>
+                                <conjunction>
+                                    <atomic name="Human9"/>
+                                    <exists prop="hasParent">
+                                        <atomic name="Person9"/>
+                                    </exists>
+                                </conjunction>
+                            </conjunction>
+                        </conjunction>
+                    </conjunction>
+                </conjunction>                
+            </conjunction>
+        </conjunction>
+    </equivalent>
+    
+    <instance-of>
+        <constant name="sheeva"/>
+        <atomic name="Human10"/>
+    </instance-of>
+    
+    <instance-of>
+        <constant name="sheeva"/>
+        <conjunction>
+            <atomic name="Human11"/>
+            <exists prop="hasParent">
+                <atomic name="Person10"/>
+            </exists>
+            <conjunction>
+                <atomic name="Human12"/>
+                <exists prop="hasParent">
+                    <atomic name="Person11"/>
+                </exists>
+                <conjunction>
+                    <atomic name="Human13"/>
+                    <exists prop="hasParent">
+                        <atomic name="Person12"/>
+                    </exists>
+                </conjunction>
+            </conjunction>
+        </conjunction>
+    </instance-of>
+
+    <related-to prop="hasParent">
+        <constant name="sheeva"/>
+        <constant name="sally"/>
+    </related-to>
+</dltheory>

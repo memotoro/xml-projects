@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Valid -->
+<expression>
+    <plus>
+        <times>
+            <int value="1"/>
+            <int value="1"/>
+            <int value="1"/>
+            <int value="1"/>
+            <times>
+                <int value="1"/>
+                <int value="1"/>
+            </times>
+        </times>
+        <minus>
+            <plus>
+                <int value="1"/>
+                <int value="1"/>
+            </plus>
+            
+            <int value="1"/>
+        </minus>
+        <int value="1"/>
+    </plus>
+</expression>

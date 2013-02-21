@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Not Valid -->
+<expression>
+    <plus>
+        <times>
+            <int value="1"/>
+            <times>
+                <int value="1"/>
+                <int value="1"/>
+            </times>
+        </times>
+        <minus>
+		 <!-- Minus has 1 child-->
+            <plus>
+                <int value="1"/>
+                <int value="1"/>
+            </plus>
+        </minus>
+    </plus>
+    
+</expression>

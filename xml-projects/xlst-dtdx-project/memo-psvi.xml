@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE dtdx SYSTEM "dtdx-bjp.dtd">
+
+<!--
+<dtdx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3schools.com dtdx-bjp.xsd">
+-->    
+<dtdx>
+    <comment>Comment for 'a' element declaration</comment>
+    <element name="a">
+        <plus>
+            <ref to="b"/>
+        </plus>
+    </element>
+
+    <comment>Comment for 'c' element declaration with different nesting elements</comment>
+    <element name="c">
+        <plus>
+            <seq>
+                <ref to="a"/>
+                <opt>
+                    <choice>
+                        <ref to="d"/>
+                        <ref to="a"/>
+                    </choice>
+                </opt>
+                <ref to="b"/>
+            </seq>
+        </plus>
+    </element>
+
+    <comment>Comment for 'd' element declaration with different nesting elements</comment>
+    <element name="d">
+        <opt>
+            <choice>
+                <ref to="c"/>
+                <star>
+                    <seq>
+                        <ref to="d"/>
+                        <ref to="a"/>
+                    </seq>
+                </star>
+                <ref to="a"/>
+            </choice>
+        </opt>
+    </element>   
+
+    <comment>Comment for 'h' element declaration</comment>
+    <element name="h">
+        <ref to="b"/>        
+    </element>
+
+    <comment>Comment for 'b' element empty declaration but with attributes</comment>
+    <element name="b">
+        <empty/>
+    </element>
+
+    <comment>Comment for 'bb' element empty declaration</comment>
+    <element name="bb">
+        <empty/>
+    </element>
+
+    <comment>Comment for 'e' element any declaration</comment>
+    <element name="e">
+        <any/>
+    </element>
+    
+    <comment>Comment for 'f' element mixed declaration</comment>
+    <element name="f">
+        <mixed>            
+        </mixed>
+    </element>
+
+    <comment>Comment for 'ee' element any declaration but with attributes</comment>
+    <element name="ee">
+        <any/>
+    </element>
+    
+    <comment>Comment for 'ff' element mixed declaration but with attributes</comment>
+    <element name="ff">
+        <mixed>            
+        </mixed>
+    </element>
+    
+    <comment>Comment for attributes declaration of 'b' element</comment>
+    <attlist on="b">
+        <attdef name="c">
+            <string/>
+            <implied/>
+        </attdef>
+        <attdef name="d">
+            <tokenized type="IDREF"/>
+            <required/>
+        </attdef>
+        <attdef name="e">
+            <tokenized type="ENTITIES"/>
+            <default fixed="true" value="DemoFixedValue"/>
+        </attdef>       
+    </attlist>
+    
+    <comment>Comment for attributes declaration of 'a' element</comment>
+    <attlist on="a">
+        <attdef name="f">
+            <enumeration>
+                <nmtoken value="A"/>
+                <nmtoken value="B"/>
+                <nmtoken value="C"/>
+                <nmtoken value="D"/>
+            </enumeration>
+            <implied/>
+        </attdef>
+        <attdef name="g">
+            <notation>
+                <nmtoken value="Z"/>
+                <nmtoken value="Y"/>
+                <nmtoken value="X"/>
+                <nmtoken value="W"/>
+            </notation>
+            <default fixed="false" value="W"/>
+        </attdef>        
+    </attlist>
+     
+    <comment>Comment for attributes declaration of 'ee' element</comment>
+    <attlist on="ee">
+        <attdef name="c">
+            <string/>
+            <implied/>
+        </attdef>     
+    </attlist>
+     
+    <comment>Comment for attributes declaration of 'ff' element</comment>
+    <attlist on="ff">
+        <attdef name="e">
+            <tokenized type="ENTITIES"/>
+            <default fixed="false" value="DemoFixedValue"/>
+        </attdef>       
+    </attlist>
+     
+</dtdx>

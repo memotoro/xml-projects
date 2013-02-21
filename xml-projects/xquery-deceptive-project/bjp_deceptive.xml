@@ -1,0 +1,8 @@
+<!-- A very simple deception.-->
+<a:name xmlns:a="http://www.bear.org/">
+    <a:firstname>
+        <!-- Look! We've redefined "a" -->
+        <a:nickname 
+            xmlns:a="http://www.lamb.org/">Uncle Awesome</a:nickname>
+    </a:firstname>
+</a:name>
